@@ -12,11 +12,13 @@ var Engine = (function(global) {
     doc.body.appendChild(canvas);
 
     function main() {
+		
         var now = Date.now(),
             dt = (now - lastTime) / 1000.0;
 
         update(dt);
-        render();
+		console.log(playing);
+        if (playing===1){render();}
 
         lastTime = now;
         win.requestAnimationFrame(main);
@@ -90,5 +92,24 @@ var Engine = (function(global) {
 
     global.ctx = ctx;
 })(this);
+
+var playing = 1;
+
+//stops the engine showing
+var stopit = function(){
+	playing=0;
+	ctx.clearRect(0, 0, 1200, 1000);
+	console.log("clear");
+	//return;
+}
+
+//turns the engine rendering on
+var startit = function(){
+	playing=1;
+	console.log("On");
+}
+
+
+
 
 

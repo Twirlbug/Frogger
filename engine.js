@@ -17,7 +17,7 @@ var Engine = (function(global) {
             dt = (now - lastTime) / 1000.0;
 
         update(dt);
-		console.log(playing);
+		//console.log(playing);
         if (playing===1){render();}
 
         lastTime = now;

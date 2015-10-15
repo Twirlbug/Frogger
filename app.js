@@ -46,6 +46,7 @@ Enemy.prototype.getRandomSpeed = function() {
 var Player = function() {
     this.xRange = [-2, 402];
     this.yRange = [-20, 380];
+    // handles the player sprite selection varried by the number 
 	if (playersprite ===0){
 		this.sprite = 'images/char-boy.png';
 		}else if (playersprite===1){
@@ -92,7 +93,7 @@ Player.prototype.checkCollisions = function() {
 					document.getElementById("lives").innerHTML = "Lives: " +livesleft;//reduce lives counter
 					//ends the games if no lives are remaining
 					if (livesleft<=0){
-					stopit();//hides the engines out put
+					stopit();//hides the engines out put and opens the loosing screen
 					document.getElementById('loss').style.display = "block";
 					document.getElementById('scoring').style.display = "none";
 				//window.location="Game Over Loss.html";
@@ -125,6 +126,7 @@ Player.prototype.handleInput = function(key) {
 }
 
 document.addEventListener('keyup', function(e) {
+// added support for wasd keys
     var allowedKeys = {
         37: 'left',
         38: 'up',
@@ -139,47 +141,58 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+
+// creates a new enemy to add to the current enemies
 var newEnemy = function(){
 	var baby = new Enemy();
 	allEnemies.push(baby);
 }
 
+
+//initialize variables 
 var playersprite=0;
 var EnemyCount =1;
 var gamestarted=0;
 var incremental = 0;
-
 var player =null;
 var allEnemies = null;
 var score = 0; 
 var livesleft=3;
 
+//sets the sprite to the one selected by the player
 var spritechoice= function(){
 playersprite = document.getElementById("selecter").selectedIndex;
  //console.log(playersprite);
 
 }
 
+// official begining the game and switching off the settings 
 var beginGame=function(){
 
+//creates the player and the enemies
 allEnemies = new Array();
  player=new Player ();	
-score =0; //resets the scores and lives	
-livesleft=document.getElementById("life").value;
 
+//resets the scores and lives	
+score =0; 
+livesleft=document.getElementById("life").value;
 document.getElementById("printscore").innerHTML = "Score: " +score;
 document.getElementById("finalScore").innerHTML = "You scored " +score + " points!";
 document.getElementById("lives").innerHTML = "Lives: " +livesleft;
 
-EnemyCount = document.getElementById("EnemyNum").value;
+//Changes over from vieing the settings to viewing the score and the game
 document.getElementById('settingspage').style.display = "none";
 document.getElementById('game').style.display = "block";
 document.getElementById('scoring').style.display = "block";
+
+
+//retrieves the enemy count and populates the array for the enemies
+EnemyCount = document.getElementById("EnemyNum").value;
 for (i=0; i<EnemyCount; i++){
 newEnemy();}
 
 
-//old engine start
+// engine start
 var NewScript=document.createElement('script')
 NewScript.src="engine.js"
 document.body.appendChild(NewScript);
@@ -193,7 +206,7 @@ var IncrementMode = function(){
 }
 
 
-//restarts the game
+//restarts the game with changing what is displayed
 var restart= function(){
 	document.getElementById('loss').style.display = "none";
 	document.getElementById('settingspage').style.display = "block";

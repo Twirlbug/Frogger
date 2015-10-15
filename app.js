@@ -66,8 +66,12 @@ Player.prototype.update = function() {
 Player.prototype.checkCollisions = function() {
     if (this.y == -20) {
         // player is on water, reset
-        this.reset();
-		window.location="Game Over Win.html";
+        
+		//window.location="Game Over Win.html";
+		score++;
+		document.getElementById("printscore").innerHTML = "Score: " +score;
+		console.log(score);
+		this.reset();
                 
     } else if (this.y >= 60 && this.y <= 220) {
         var self = this;
@@ -133,6 +137,7 @@ var gamestarted=0;
 
 var player =null;
 var allEnemies = null;
+var score = 0; 
 
 var spritechoice= function(){
 playersprite = document.getElementById("selecter").selectedIndex;

@@ -7,8 +7,8 @@ var Engine = (function(global) {
         patterns = {},
         lastTime;
 
-    canvas.width = 705;
-    canvas.height = 606;
+    canvas.width = 707;
+    canvas.height = 656;
     doc.body.appendChild(canvas);
 
     function main() {

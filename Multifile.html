@@ -7,7 +7,9 @@
        <script type="text/javascript"  src="engine.js"></script>
 </head>
 <body>
+<div id="scoring" style="display: none;">
 <p align="left" id = "printscore"> Score: 0 </p>
+</div>
 <div id="settingspage">
  <p><font size="4"> Choose your player: </p> </font>
 	<div class="horizontal">
@@ -26,9 +28,10 @@
 	</select>
 
 <p><font size="2"> How many enemies would you like? </p> </font>
-<input type="text" id="EnemyNum" value="" maxlength="100">
-
+<input type="text" id="EnemyNum" value="" maxlength="100"> </input>
 <button onclick="beginGame()"> Start </button>
+<button onclick="IncrementMode()"> Start Incremental Game </button>
+<p> Note: Incremental add one bug for each successful crossing. </p>
 </div>
 <div id="game">
  <script src="resources.js"></script>

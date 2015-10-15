@@ -66,8 +66,17 @@ Player.prototype.update = function() {
 Player.prototype.checkCollisions = function() {
     if (this.y == -20) {
         // player is on water, reset
-        this.reset();
-		window.location="Game Over Win.html";
+        //the player is reset and the score is incremented
+		//window.location="Game Over Win.html";
+		score++;
+		document.getElementById("printscore").innerHTML = "Score: " +score;
+		document.getElementById("finalScore").innerHTML = "You scored " +score + "!";
+		//console.log(score);
+		if (incremental===1){
+			//adds an enemy if the stages are incremental
+			newEnemy(); 
+		}
+		this.reset();
                 
     } else if (this.y >= 60 && this.y <= 220) {
         var self = this;
@@ -79,7 +88,15 @@ Player.prototype.checkCollisions = function() {
                 // is the bug on the player?
                 if (enemy.x >= player.x - 30 && enemy.x <= player.x + 30) {
                     self.reset();
-					window.location="Game Over Loss.html";
+					livesleft--;
+					document.getElementById("lives").innerHTML = "Lives: " +livesleft;//reduce lives counter
+					//ends the games if no lives are remaining
+					if (livesleft<=0){
+					stopit();//hides the engines out put
+					document.getElementById('loss').style.display = "block";
+					document.getElementById('scoring').style.display = "none";
+				//window.location="Game Over Loss.html";
+				}
                 }
             }
         });
@@ -130,13 +147,16 @@ var newEnemy = function(){
 var playersprite=0;
 var EnemyCount =1;
 var gamestarted=0;
+var incremental = 0;
 
 var player =null;
 var allEnemies = null;
+var score = 0; 
+var livesleft=3;
 
 var spritechoice= function(){
 playersprite = document.getElementById("selecter").selectedIndex;
- console.log(playersprite);
+ //console.log(playersprite);
 
 }
 
@@ -144,21 +164,40 @@ var beginGame=function(){
 
 allEnemies = new Array();
  player=new Player ();	
-	
+score =0; //resets the scores and lives	
+livesleft=document.getElementById("life").value;
+
+document.getElementById("printscore").innerHTML = "Score: " +score;
+document.getElementById("finalScore").innerHTML = "You scored " +score + " points!";
+document.getElementById("lives").innerHTML = "Lives: " +livesleft;
+
 EnemyCount = document.getElementById("EnemyNum").value;
 document.getElementById('settingspage').style.display = "none";
 document.getElementById('game').style.display = "block";
-
+document.getElementById('scoring').style.display = "block";
 for (i=0; i<EnemyCount; i++){
 newEnemy();}
 
 
-
+//old engine start
 var NewScript=document.createElement('script')
 NewScript.src="engine.js"
 document.body.appendChild(NewScript);
+
+}
+
+//adds one bug each turn
+var IncrementMode = function(){
+	incremental=1;
+	beginGame();
 }
 
 
-
-
+//restarts the game
+var restart= function(){
+	document.getElementById('loss').style.display = "none";
+	document.getElementById('settingspage').style.display = "block";
+	document.getElementById('game').style.display = "none";
+	document.getElementById('scoring').style.display = "none";
+	location.reload();
+}
